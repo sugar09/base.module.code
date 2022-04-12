@@ -1,8 +1,12 @@
 package base
+
 //基本类型转换
 import (
 	"fmt"
+	"github.com/shopspring/decimal"
+	"reflect"
 	"strconv"
+	"strings"
 )
 
 // InterfaceToString interface类型转换String
@@ -39,5 +43,24 @@ var InterfaceToFloat32 = func(val interface{}) float32 {
 
 // InterfaceToMapWithStringInterface interface类型转为map
 var InterfaceToMapWithStringInterface = func(val interface{}) map[string]interface{} {
-	return val.(map[string]interface{})
+	//检测变量类型是否为map
+	if reflect.TypeOf(val).Kind() == reflect.Map {
+		return val.(map[string]interface{})
+	}
+	return map[string]interface{}{}
 }
+
+var RebuildScienceNumToString = func(numStr string) string {
+	if strings.Contains(numStr, "e+") {
+		//是否科学计数法
+		decimalNum, err := decimal.NewFromString(numStr)
+		if err != nil {
+			Error("获取科学计数数值出错", err)
+			return numStr
+		}
+		decimalStr := decimalNum.String()
+		return decimalStr
+	}
+	return numStr
+}
+
