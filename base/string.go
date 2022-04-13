@@ -5,8 +5,8 @@ func StringContains(str, sub string) int {
 	lr := len(str)
 	lb := len(sub)
 
-	//如果sub长度大于str
-	if lr < lb {
+	//如果sub长度大于str，或sub长度等于0；
+	if lr < lb || lb == 0 {
 		return -1
 	}
 
@@ -39,7 +39,7 @@ func getNext(s string) []int {
 	next[0] = -1
 	k := -1
 	for i := 1; i < len(s); i++ {
-		if k != -1 && s[k+1] != s[i] {
+		for k != -1 && s[k+1] != s[i] {
 			k = next[k]
 		}
 		if s[k+1] == s[i] {
