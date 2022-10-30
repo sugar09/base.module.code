@@ -11,6 +11,20 @@ import (
 
 // InterfaceToString interface类型转换String
 var InterfaceToString = func(val interface{}) string {
+	tf := reflect.TypeOf(val)
+	if tf == nil {
+		return ""
+	}
+	switch tf.Kind() {
+	case reflect.Map:
+		fmt.Println("Map:", val)
+		return ""
+	case reflect.Chan:
+		fmt.Println("Map:", val)
+		return ""
+	}
+	fmt.Println("反射类型", reflect.TypeOf(val))
+	fmt.Println("反射类型", reflect.TypeOf(val).Kind())
 	return fmt.Sprint(val)
 }
 
